@@ -99,9 +99,11 @@ class AttendanceController extends Controller
         foreach ($request->attendences as $studentid => $attendence) {
 
             if( $attendence == 'present' ) {
-                $attendence_status = true;
+                $attendence_status = 1;
             } else if( $attendence == 'absent' ){
-                $attendence_status = false;
+                $attendence_status = 0;
+            }else{
+                $attendence_status = 2;
             }
 
             Attendance::create([

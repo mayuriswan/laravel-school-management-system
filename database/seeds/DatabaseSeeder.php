@@ -19,32 +19,32 @@ class DatabaseSeeder extends Seeder
 
         $user = User::create([
             'name'          => 'Admin',
-            'email'         => 'admin@demo.com',
-            'password'      => bcrypt('12345678'),
+            'email'         => 'admin@gmail.com',
+            'password'      => bcrypt('admin123'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user->assignRole('Admin');
 
         $user2 = User::create([
             'name'          => 'Teacher',
-            'email'         => 'teacher@demo.com',
-            'password'      => bcrypt('12345678'),
+            'email'         => 'teacher@gmail.com',
+            'password'      => bcrypt('teacher123'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user2->assignRole('Teacher');
 
         $user3 = User::create([
             'name'          => 'Parent',
-            'email'         => 'parent@demo.com',
-            'password'      => bcrypt('12345678'),
+            'email'         => 'parent@gmail.com',
+            'password'      => bcrypt('parent123'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user3->assignRole('Parent');
 
         $user4 = User::create([
             'name'          => 'Student',
-            'email'         => 'student@demo.com',
-            'password'      => bcrypt('12345678'),
+            'email'         => 'student@gmail.com',
+            'password'      => bcrypt('student123'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user4->assignRole('Student');
@@ -54,10 +54,10 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id'           => $user2->id,
                 'gender'            => 'male',
-                'phone'             => '0123456789',
+                'phone'             => '09123457881',
                 'dateofbirth'       => '1993-04-11',
-                'current_address'   => 'Dhaka-1215',
-                'permanent_address' => 'Dhaka-1215',
+                'current_address'   => 'Binalbagan City',
+                'permanent_address' => 'Brgy.Enclaro, Binalbagan City',
                 'created_at'        => date("Y-m-d H:i:s")
             ]
         ]);
@@ -66,9 +66,9 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id'           => $user3->id,
                 'gender'            => 'male',
-                'phone'             => '0123456789',
-                'current_address'   => 'Dhaka-1215',
-                'permanent_address' => 'Dhaka-1215',
+                'phone'             => '09341323339',
+                'current_address'   => 'Tan-awan City',
+                'permanent_address' => 'Brgy.Pasil, Himamaylan City',
                 'created_at'        => date("Y-m-d H:i:s")
             ]
         ]);
@@ -86,11 +86,11 @@ class DatabaseSeeder extends Seeder
                 'parent_id'         => 1,
                 'class_id'          => 1,
                 'roll_number'       => 1,
-                'gender'            => 'male',
-                'phone'             => '0123456789',
-                'dateofbirth'       => '1993-04-11',
-                'current_address'   => 'Dhaka-1215',
-                'permanent_address' => 'Dhaka-1215',
+                'gender'            => 'female',
+                'phone'             => '09452345678',
+                'dateofbirth'       => '2000-04-11',
+                'current_address'   => 'Aguisan City',
+                'permanent_address' => 'Himamaylan City',
                 'created_at'        => date("Y-m-d H:i:s")
             ]
         ]);

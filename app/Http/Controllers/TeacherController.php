@@ -45,10 +45,10 @@ class TeacherController extends Controller
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
             'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
+            'speciality'        => 'required|string|max:255',
             'dateofbirth'       => 'required|date',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'statu' =>'required|string|max:255',
+            'grade' =>'required|string|max:255'
         ]);
 
         $user = User::create([
@@ -69,10 +69,12 @@ class TeacherController extends Controller
 
         $user->teacher()->create([
             'gender'            => $request->gender,
-            'phone'             => $request->phone,
+            'speciality'             => $request->speciality,
             'dateofbirth'       => $request->dateofbirth,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
+            'statu' =>$request->statu,
+            'grade' =>$request->grade,
+
+
         ]);
 
         $user->assignRole('Teacher');
@@ -116,11 +118,12 @@ class TeacherController extends Controller
         $request->validate([
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users,email,'.$teacher->user_id,
+            
             'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
+            'speciality'        => 'required|string|max:255',
             'dateofbirth'       => 'required|date',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'statu' =>'required|string|max:255',
+            'grade' =>'required|string|max:255'
         ]);
 
         $user = User::findOrFail($teacher->user_id);
@@ -140,10 +143,10 @@ class TeacherController extends Controller
 
         $user->teacher()->update([
             'gender'            => $request->gender,
-            'phone'             => $request->phone,
+            'speciality'             => $request->speciality,
             'dateofbirth'       => $request->dateofbirth,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
+            'statu' =>$request->statu,
+            'grade' =>$request->grade,
         ]);
 
         return redirect()->route('teacher.index');

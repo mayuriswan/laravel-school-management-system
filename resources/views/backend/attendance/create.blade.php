@@ -49,6 +49,10 @@
                                     <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio" value="absent">
                                     <span class="text-sm">Absent</span>
                                 </label>
+                                <label class="ml-4 block text-gray-500 font-semibold">
+                                    <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio" value="absent-justify">
+                                    <span class="text-sm">Absent Justify </span>
+                                </label>
                             </div>
                             <input type="hidden" name="class_id" value="{{ $student->class_id }}">
                             <input type="hidden" name="teacher_id" value="{{ $class->teacher_id }}">

@@ -17,10 +17,11 @@ class CreateTeachersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->enum('gender', ['male', 'female', 'other']);
-            $table->string('phone');
+            $table->enum('statu', ['fac', 'perm']);
+            $table->string('speciality');
+            $table->string('grade');
             $table->date('dateofbirth');
-            $table->string('current_address');
-            $table->string('permanent_address');
+           
             $table->timestamps();
         });
     }

@@ -73,10 +73,12 @@
                                         <div class="flex flex-row justify-between w-64">
                                             <div class="text-sm text-left text-gray-600 py-2 px-4 font-semibold">{{ $attendance->student->user->name }}</div>
                                             <div class="text-sm text-left text-gray-600 py-2 px-4 font-semibold">
-                                                @if ($attendance->attendence_status)
+                                                @if ($attendance->attendence_status==1)
                                                     <span class="text-xs text-white bg-green-500 px-2 py-1 rounded">P</span>
+                                                @elseif($attendance->attendence_status==0)
+                                                    <span class="text-xs text-white bg-green-500 px-2 py-1 rounded">A</span>
                                                 @else
-                                                    <span class="text-xs text-white bg-red-500 px-2 py-1 rounded">A</span>
+                                                    <span class="text-xs text-white bg-blue-500 px-2 py-1 rounded">AJ</span>
                                                 @endif
                                             </div>
                                         </div>
