@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Module extends Model
 {
     protected $fillable = [
         'name',
         'slug',
-        
+        'module_code',
         'teacher_id',
-        'module_id' ,
         'description'
     ];
 
@@ -19,8 +18,9 @@ class Subject extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
-    public function module()
+    public function subjects()
     {
-        return $this->belongsTo(module::class);
+        return $this->hasMany(Subject::class);
     }
+    
 }

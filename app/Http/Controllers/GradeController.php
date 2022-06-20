@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Grade;
 use App\Subject;
+use App\Fillier;
 use App\Teacher;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,9 @@ class GradeController extends Controller
      */
     public function create()
     {
-        $teachers = Teacher::latest()->get();
+        $filliers = Fillier::latest()->get();
         
-        return view('backend.classes.create', compact('teachers'));
+        return view('backend.classes.create', compact('filliers'));
     }
 
     /**
@@ -44,14 +45,14 @@ class GradeController extends Controller
         $request->validate([
             'class_name'        => 'required|string|max:255|unique:grades',
             'class_numeric'     => 'required|numeric',
-            'teacher_id'        => 'required|numeric',
+            'fillier_id'        => 'required|numeric',
             'class_description' => 'required|string|max:255'
         ]);
 
         Grade::create([
             'class_name'        => $request->class_name,
             'class_numeric'     => $request->class_numeric,
-            'teacher_id'        => $request->teacher_id,
+            'fillier_id'        => $request->fillier_id,
             'class_description' => $request->class_description
         ]);
 
@@ -77,7 +78,7 @@ class GradeController extends Controller
      */
     public function edit($id)
     {
-        $teachers = Teacher::latest()->get();
+        $teachers = Fillier::latest()->get();
         $class = Grade::findOrFail($id);
 
         return view('backend.classes.edit', compact('class','teachers'));

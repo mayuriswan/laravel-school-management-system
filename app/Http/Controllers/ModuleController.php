@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Subject;
+
 use App\Teacher;
 use App\Module;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
 
-class SubjectController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('teacher','module')->latest()->paginate(10);
+        $modules = Module::with('teacher')->latest()->paginate(10);
         
-        return view('backend.subjects.index', compact('subjects'));
+        return view('backend.modules.index', compact('modules'));
     }
 
     /**
@@ -33,7 +33,7 @@ class SubjectController extends Controller
         $teachers = Teacher::latest()->get();
         $modules = Module::latest()->get();
 
-        return view('backend.subjects.create', compact('teachers','modules'));
+        return view('backend.modules.create', compact('teachers','modules'));
     }
 
     /**
@@ -45,23 +45,23 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required|string|max:255|unique:subjects',
+            'name'          => 'required|string|max:255|unique:modules',
             
             'teacher_id'    => 'required|numeric',
-            'module_id'    => 'required|numeric',
+            'module_code'    => 'required|numeric',
             'description'   => 'required|string|max:255'
         ]);
 
-        Subject::create([
+        Module::create([
             'name'          => $request->name,
             'slug'          => Str::slug($request->name),
-            
+        
             'teacher_id'    => $request->teacher_id,
-            'module_id'    => $request->module_id,
+            'module_code'    => $request->module_code,
             'description'   => $request->description
         ]);
 
-        return redirect()->route('subject.index');
+        return redirect()->route('module.index');
     }
 
     /**
@@ -81,12 +81,19 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Module $module)
     {
         $teachers = Teacher::latest()->get();
         $modules = Module::latest()->get();
-        return view('backend.subjects.edit', compact('subject','teachers','modules'));
+        return view('backend.modules.edit', compact('module','teachers','modules'));
     }
+    public function editb(Module $module)
+    {
+        $teachers = Teacher::latest()->get();
+        $modules = Module::latest()->get();
+        return view('backend.module.edit', compact('module','teachers','modules'));
+    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -95,26 +102,25 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, Module $module)
     {
         $request->validate([
-            'name'          => 'required|string|max:255|unique:subjects,name,'.$subject->id,
-            
+            'name'          => 'required|string|max:255|unique:modules,name,'.$module->id,
+            'module_code'    => 'required|numeric',
             'teacher_id'    => 'required|numeric',
-            'module_id'    => 'required|numeric',
+           
             'description'   => 'required|string|max:255'
         ]);
 
-        $subject->update([
+        $module->update([
             'name'          => $request->name,
             'slug'          => Str::slug($request->name),
-            
             'teacher_id'    => $request->teacher_id,
-            'module_id'    => $request->module_id,
+            'module_code'   => $request->module_code,
             'description'   => $request->description
         ]);
 
-        return redirect()->route('subject.index');
+        return redirect()->route('module.index');
     }
 
     /**

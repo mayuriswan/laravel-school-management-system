@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Subject;
+
 use App\Teacher;
 use App\Module;
+use App\Fillier;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
 
-class SubjectController extends Controller
+class FillierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +19,10 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('teacher','module')->latest()->paginate(10);
+        $subjects = Fillier::with('teacher')->latest()->paginate(10);
         
-        return view('backend.subjects.index', compact('subjects'));
+        
+        return view('backend.filliers.index', compact('subjects'));
     }
 
     /**
@@ -33,7 +35,7 @@ class SubjectController extends Controller
         $teachers = Teacher::latest()->get();
         $modules = Module::latest()->get();
 
-        return view('backend.subjects.create', compact('teachers','modules'));
+        return view('backend.filliers.create', compact('teachers','modules'));
     }
 
     /**
@@ -45,23 +47,23 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required|string|max:255|unique:subjects',
+            'name'          => 'required|string|max:255|unique:modules',
             
             'teacher_id'    => 'required|numeric',
-            'module_id'    => 'required|numeric',
+            
             'description'   => 'required|string|max:255'
         ]);
 
-        Subject::create([
-            'name'          => $request->name,
-            'slug'          => Str::slug($request->name),
+        Fillier::create([
+            'fillier_name'          => $request->name,
             
+        
             'teacher_id'    => $request->teacher_id,
-            'module_id'    => $request->module_id,
-            'description'   => $request->description
+            
+            'fillier_description'   => $request->description
         ]);
 
-        return redirect()->route('subject.index');
+        return redirect()->route('filliers.index');
     }
 
     /**
@@ -81,40 +83,35 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit($id)
     {
         $teachers = Teacher::latest()->get();
-        $modules = Module::latest()->get();
-        return view('backend.subjects.edit', compact('subject','teachers','modules'));
+       $subject = Fillier::where('id',$id)->first(); 
+        return view('backend.filliers.edit', compact('subject','teachers'));
     }
+  
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subject  $subject
+     * @param  \App\Module $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'          => 'required|string|max:255|unique:subjects,name,'.$subject->id,
-            
-            'teacher_id'    => 'required|numeric',
-            'module_id'    => 'required|numeric',
-            'description'   => 'required|string|max:255'
-        ]);
+        $fillier =Fillier::where('id',$id)->first(); 
+        
 
-        $subject->update([
-            'name'          => $request->name,
-            'slug'          => Str::slug($request->name),
-            
+        $fillier->update([
+            'fillier_name'          => $request->name,
+           
             'teacher_id'    => $request->teacher_id,
-            'module_id'    => $request->module_id,
-            'description'   => $request->description
+            
+            'fillier_description'   => $request->description
         ]);
 
-        return redirect()->route('subject.index');
+        return redirect()->route('filliers.index');
     }
 
     /**
@@ -123,9 +120,9 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Fillier $fillier)
     {
-        $subject->delete();
+        $fillier->delete();
 
         return back();
     }

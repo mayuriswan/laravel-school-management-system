@@ -9,7 +9,7 @@ class Grade extends Model
     protected $fillable = [
         'class_name',
         'class_numeric',
-        'teacher_id',
+        'fillier_id',
         'class_description'
     ];
 
@@ -22,9 +22,10 @@ class Grade extends Model
     {
         return $this->belongsToMany(Subject::class);
     }
-
-    public function teacher() 
+    public function fillier() 
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Fillier::class);
     }
+
+   
 }

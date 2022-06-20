@@ -59,7 +59,7 @@
                                     <option value="{{ $teacher->id }}"
                                         {{ ($teacher->id === $class->teacher_id) ? 'selected' : '' }}
                                     >
-                                        {{ $teacher->user->name }}
+                                        {{ $teacher->Fillier_name }}
                                     </option>
                                 @endforeach
                             </select>

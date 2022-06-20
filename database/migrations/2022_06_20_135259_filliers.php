@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateSubjectsTable extends Migration
+class Filliers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subjects', function (Blueprint $table) {
+        Schema::create('filliers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('slug');
-          
             $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('module_id');
-            $table->text('description');
+          
+            $table->string('fillier_name');
+            $table->string('fillier_description');
             $table->timestamps();
         });
     }
@@ -32,6 +30,7 @@ class CreateSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subjects');
+        //
+        Schema::dropIfExists('filliers');
     }
 }

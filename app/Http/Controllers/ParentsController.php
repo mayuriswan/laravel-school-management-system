@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Parents;
 use Illuminate\Http\Request;
+use App\Module;
+use App\Teacher;
+
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -19,8 +22,9 @@ class ParentsController extends Controller
     public function index()
     {
         $parents = Parents::with(['user','children'])->latest()->paginate(10);
+        $modules = Module::with('teacher')->latest()->paginate(10);
         
-        return view('backend.parents.index', compact('parents'));
+        return view('backend.parents.index', compact('modules'));
     }
 
     /**
@@ -98,9 +102,10 @@ class ParentsController extends Controller
      */
     public function edit($id)
     {
-        $parent = Parents::with('user')->findOrFail($id); 
+        $teachers = Teacher::latest()->get();
+        $parent = Module::where('id',$id)->first(); 
 
-        return view('backend.parents.edit', compact('parent'));
+        return view('backend.parents.edit', compact('parent','teachers'));
     }
 
     /**
@@ -112,35 +117,20 @@ class ParentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $parents = Parents::findOrFail($id);
+        $parent = Module::where('id',$id)->first(); 
 
         $request->validate([
-            'name'              => 'required|string|max:255',
-            'email'             => 'required|string|email|max:255|unique:users,email,'.$parents->user_id,
-            'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'name'          => 'required|string|max:255'.$id,
+            
+            'teacher_id'    => 'required|numeric',
+           
+           
         ]);
 
-        if ($request->hasFile('profile_picture')) {
-            $profile = Str::slug($parents->user->name).'-'.$parents->user->id.'.'.$request->profile_picture->getClientOriginalExtension();
-            $request->profile_picture->move(public_path('images/profile'), $profile);
-        } else {
-            $profile = $parents->user->profile_picture;
-        }
-
-        $parents->user()->update([
-            'name'              => $request->name,
-            'email'             => $request->email,
-            'profile_picture'   => $profile
-        ]);
-
-        $parents->update([
-            'gender'            => $request->gender,
-            'phone'             => $request->phone,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
+        $parent->update([
+           
+            'teacher_id'    => $request->teacher_id,
+           
         ]);
 
         return redirect()->route('parents.index');

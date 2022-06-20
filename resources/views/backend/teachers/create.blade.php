@@ -123,7 +123,7 @@
                                 <span class="text-sm">Fac</span>
                             </label>
                             <label class="ml-4 block text-gray-500 font-bold">
-                                <input name="statu" class="mr-2 leading-tight" type="radio" value="per">
+                                <input name="statu" class="mr-2 leading-tight" type="radio" value="perm">
                                 <span class="text-sm">Per</span>
                             </label>
                             
